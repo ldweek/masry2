@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<record id="replacement_error_line_tree" model="ir.ui.view">
+    <field name="name">error.replacement.purchase.order.line.tree</field>
+    <field name="model">purchase.order.line</field>
+    <field name="arch" type="xml">
+        <tree string="Error Replacement" create="0" edit="0" default_order="id desc" duplicate="0">
+            <header>
+                <button string="Deduction Salary" name="deduction_salary_action"
+                        class="btn btn-primary" type="object"/>
+            </header>
+            <field name="date_order" optional="show"/>
+            <field name="error_responsible_id" />
+            <field name="product_id" />
+            <field name="product_qty" />
+            <field name="product_uom_category_id" optional="hide" />
+            <field name="product_uom" string="UoM" groups="uom.group_uom" options="{'no_open': True}" />
+            <field name="price_unit" />
+            <field name="taxes_id" widget="many2many_tags" options="{'no_create': True}" />
+            <field name="currency_id" invisible="1" optional="hide"/>
+            <field name="price_subtotal" string="Tax excl."  sum="Total"/>
+            <field name="price_total" string="Tax incl." optional="hide" sum="Total incl"/>
+        </tree>
+    </field>
+</record>
+
+    <record id="error_replacement_tree_view" model="ir.actions.act_window">
+        <field name="name">Error Replacement Line</field>
+        <field name="res_model">purchase.order.line</field>
+        <field name="view_mode">tree</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="ir_action_window_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="replacement_error_line_tree"/>
+        <field name="act_window_id" ref="error_replacement_tree_view"/>
+    </record>
+
+    <menuitem id="error_replacement_menu_id"
+              name="Error Replacement Line"
+              parent="green_contracts.contract_menu_root"
+              action="error_replacement_tree_view"
+              sequence="38"/>
+</odoo>

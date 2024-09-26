@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="contract_view_form_contract" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Contracts" string="Contract" name="contract_contract">
+                    <div class="app_settings_block" data-string="pdc setting" id="expire" string="Expire day"
+                         data-key="expire_day">
+                        <h2>Commission</h2>
+                        <div class="row mt16 o_settings_container" id="end_contract_setting">
+
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Technical Eng Commission</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="tech_commission" class="text-center oe_inline"
+                                               help="Enter the number of days by which the installation must be completed"/>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Inspection Eng Commission</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="executive_commission" class="text-center oe_inline"
+                                               help="Enter the number of days by which the installation must be completed"/>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Telesales Commission</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="telesales_commission" class="text-center oe_inline"
+                                               help="Enter the number of days by which the installation must be completed"/>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">External Commission</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="out_commission" class="text-center oe_inline"
+                                               help="Enter the number of days by which the installation must be completed"/>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Inspection Manger Commission</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="executive_manager_commission" class="text-center oe_inline"
+                                               help="Enter the number of days by which the installation must be completed"/>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Technical Manger Commission</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="tech_manager_commission" class="text-center oe_inline"
+                                               help="Enter the number of days by which the installation must be completed"/>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="app_settings_block" data-string="Rate Commission" id="rate_commission"
+                         string="Floor Bonus"
+                         data-key="expire_day">
+                        <h2>Monthly Commission Percentage</h2>
+                        <div class="row mt16 o_settings_container" id="end_contract_setting">
+                            <div class="text-muted">
+                                Enter the monthly commission percentage
+                            </div>
+                            <div class="col-xs-6 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Rate</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="first_rate" class="text-center oe_inline"
+                                        />
+                                        <span>%</span>
+
+                                        <div class="text-muted">
+                                            Rate commission between amount 700,000 to 1,000,000
+                                            <field name="green_currency_id"  style="display: inline;"
+                                                   options="{'no_open':True,'no_create': True}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Rate</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="second_rate" class="text-center oe_inline"
+                                        />
+                                        <span>%</span>
+
+                                        <div class="text-muted">
+                                            Rate commission between amount 1,000,001 to 1,500,000
+                                            <field name="green_currency_id"  style="display: inline;"
+                                                   options="{'no_open':True,'no_create': True}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Rate</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="third_rate" class="text-center oe_inline"
+                                        />
+                                        <span>%</span>
+
+                                        <div class="text-muted">
+                                            Rate commission between amount 1,500,001 to 2,000,000
+                                            <field name="green_currency_id"  style="display: inline;"
+                                                   options="{'no_open':True,'no_create': True}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Rate</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="four_rate" class="text-center oe_inline"
+                                        />
+                                        <span>%</span>
+
+                                        <div class="text-muted">
+                                            Rate commission between amount 2,000,001 to 2,500,000
+                                            <field name="green_currency_id"  style="display: inline;"
+                                                   options="{'no_open':True,'no_create': True}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-4 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Rate</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="five_rate" class="text-center oe_inline"
+                                        />
+                                        <span>%</span>
+
+                                        <div class="text-muted">
+                                            Rate commission between amount above 2,500,000
+                                            <field name="green_currency_id"  style="display: inline;"
+                                                   options="{'no_open':True,'no_create': True}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="app_settings_block" data-string="pdc setting" id="expire" string="Expire day"
+                         data-key="expire_day">
+                        <h2>Contract</h2>
+                        <div class="row mt16 o_settings_container" id="end_contract_setting">
+                            <div class="col-xs-6 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Day To Finish Installation</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="day_installation" class="text-center oe_inline"
+                                               help="Enter the number of days by which the installation must be completed"/>
+                                        <span>days</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">maximum amount of damage allowed</span>
+                                    <div class="content-group mt16">
+                                        <div class="content text-muted ">
+                                            Enter the maximum amount of damage allowed
+                                        </div>
+                                        <field name="limit_error" class="text-center oe_inline" style="display: inline;"
+                                               help="Enter the maximum amount of damage allowed"/>
+                                        <field name="green_currency_id"  options="{'no_open':True,'no_create': True}" style="display: inline;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--                    <div class="app_settings_block" data-string="Floor Bonus" id="floor_bonus" string="Floor Bonus"-->
+                    <!--                         data-key="expire_day">-->
+                    <!--                        <h2>Floor Bonus</h2>-->
+                    <!--                        <div class="row mt16 o_settings_container" id="end_contract_setting">-->
+                    <!--                            <div class="text-muted">-->
+                    <!--                                Enter the Bonus for each Floor-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-xs-4 col-md-4 o_setting_box">-->
+                    <!--                                <div class="o_setting_left_pane"/>-->
+                    <!--                                <div class="o_setting_right_pane">-->
+                    <!--                                    <span class="o_form_label">ground Floor</span>-->
+                    <!--                                    <div class="text-muted content-group mt16">-->
+                    <!--                                        <field name="floor_ground" class="text-center oe_inline"-->
+                    <!--                                               help="Enter the Bonus for Number of floors"/>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+
+                    <!--                            <div class="col-xs-4 col-md-4 o_setting_box">-->
+                    <!--                                <div class="o_setting_left_pane"/>-->
+                    <!--                                <div class="o_setting_right_pane">-->
+                    <!--                                    <span class="o_form_label">Floor 1</span>-->
+                    <!--                                    <div class="text-muted content-group mt16">-->
+                    <!--                                        <field name="floor_1" class="text-center oe_inline"-->
+                    <!--                                               help="Enter the Bonus for Number of floors"/>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+
+                    <!--                            <div class="col-xs-4 col-md-4 o_setting_box">-->
+                    <!--                                <div class="o_setting_left_pane"/>-->
+                    <!--                                <div class="o_setting_right_pane">-->
+                    <!--                                    <span class="o_form_label">Floor 2</span>-->
+                    <!--                                    <div class="text-muted content-group mt16">-->
+                    <!--                                        <field name="floor_2" class="text-center oe_inline"-->
+                    <!--                                               help="Enter the Bonus for Number of floors"/>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-xs-4 col-md-4 o_setting_box">-->
+                    <!--                                <div class="o_setting_left_pane"/>-->
+                    <!--                                <div class="o_setting_right_pane">-->
+                    <!--                                    <span class="o_form_label">Floor 3</span>-->
+                    <!--                                    <div class="text-muted content-group mt16">-->
+                    <!--                                        <field name="floor_3" class="text-center oe_inline"-->
+                    <!--                                               help="Enter the Bonus for Number of floors"/>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-xs-4 col-md-4 o_setting_box">-->
+                    <!--                                <div class="o_setting_left_pane"/>-->
+                    <!--                                <div class="o_setting_right_pane">-->
+                    <!--                                    <span class="o_form_label">Floor 4</span>-->
+                    <!--                                    <div class="text-muted content-group mt16">-->
+                    <!--                                        <field name="floor_4" class="text-center oe_inline"-->
+                    <!--                                               help="Enter the Bonus for Number of floors"/>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-xs-4 col-md-4 o_setting_box">-->
+                    <!--                                <div class="o_setting_left_pane"/>-->
+                    <!--                                <div class="o_setting_right_pane">-->
+                    <!--                                    <span class="o_form_label">Floor from 5 TO 7</span>-->
+                    <!--                                    <div class="text-muted content-group mt16">-->
+                    <!--                                        <field name="floor_7" class="text-center oe_inline"-->
+                    <!--                                               help="Enter the Bonus for Number of floors"/>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-xs-4 col-md-4 o_setting_box">-->
+                    <!--                                <div class="o_setting_left_pane"/>-->
+                    <!--                                <div class="o_setting_right_pane">-->
+                    <!--                                    <span class="o_form_label">Floor 8 and Above</span>-->
+                    <!--                                    <div class="text-muted content-group mt16">-->
+                    <!--                                        <field name="floor_8" class="text-center oe_inline"-->
+                    <!--                                               help="Enter the Bonus for Number of floors"/>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="contract_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'contract_contract', 'bin_size': False}</field>
+    </record>
+
+    <menuitem id="config_menu" name="Configration" sequence="99" parent="green_contracts.contract_menu_root">
+        <menuitem id="settings_menu" name="Settings"
+                  sequence="1" action="contract_config_settings_action"/>
+    </menuitem>
+</odoo>

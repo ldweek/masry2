@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="mrp_bom_form_inherit" model="ir.ui.view">
+        <field name="name">mrp.bom.form.inherit</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button type="object" name="set_products_quantity" string="Calc Components Qty"
+                            class="btn btn-primary"/>
+                </header>
+            </xpath>
+
+            <xpath expr="//notebook" position="before">
+                <group/>
+                <group>
+                    <group>
+                        <group/>
+                        <group>
+                            <field name="tall"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="width"/>
+                        </group>
+                        <group>
+                            <field name="height"/>
+                        </group>
+                    </group>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

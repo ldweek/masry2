@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="equation_equation_menu" parent="mrp.menu_mrp_bom" sequence="16" action="equation_equation_action"/>
+    <menuitem id="pricing_menu" sequence="5" action="pricing_menu_action"/>
+
+</odoo>

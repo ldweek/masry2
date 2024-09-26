@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+customer_type_id,custoemr_type_name,model_customer_type,,1,1,1,1
+way_type_id,way_type_name,model_way,,1,1,1,1
+crm_lead_line_id,crm_lead_line_name,model_crm_lead_line,,1,1,1,1

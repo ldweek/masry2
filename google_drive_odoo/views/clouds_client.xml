@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="clouds_client_view_form" model="ir.ui.view">
+        <field name="name">clouds.client.form.googledrive</field>
+        <field name="model">clouds.client</field>
+        <field name="inherit_id" ref="cloud_base.clouds_client_view_form"/>
+        <field name="arch" type="xml">
+            <group name="main_setting" position="after">
+                <group name="google_drive_settings" invisible="cloud_client != 'google_drive'">
+                    <field name="googledrive_client_id" readonly="state != 'draft'" required="cloud_client == 'google_drive'" string="App client ID"/>
+                    <field name="googledrive_client_secret"
+                           password="True"
+                           required="cloud_client == 'google_drive'"
+                           readonly="state not in ('draft', 'reconnect',)"
+                           string="App client secret"
+                    />
+                    <field name="googledrive_redirect_uri"
+                           required="cloud_client == 'google_drive'"
+                           readonly="state not in ('draft', 'reconnect',)"
+                           placeholder="https://yourodoodomain/google_drive_token"
+                           string="Redirect URL"
+                    />
+                    <field name="googleteam_drive" string="Team drives tariffs"/>
+                    <field name="googledrive_drive"
+                           invisible="not googleteam_drive"
+                           required="googleteam_drive"
+                           readonly="state != 'draft'"
+                           placeholder="My Drive"
+                           string="Team drive name"
+                    />
+                </group>
+                <group name="google_drive_tech" groups="base.group_no_one" invisible="1">
+                    <field name="googledrive_session"/>
+                    <field name="google_drive_key" invisible="not googleteam_drive"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="manufacturing_department_action" model="ir.actions.act_window">
+        <field name="name">manufacturing.department.action</field>
+        <field name="res_model">manufacturing.department</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="manufacturing_department_from_view" model="ir.ui.view">
+        <field name="name">manufacturing.department.form.view</field>
+        <field name="model">manufacturing.department</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" default_order="id desc" duplicate="0">
+                <header>
+                    <button name="open_request_wizad" type="object"
+                            string="Material Request"
+                            context="{'type': 'material_request',  'default_type': 'material_request'}"
+                            class="btn btn-primary"/>
+                    <button name="open_request_wizad" type="object"
+                            string="Manufacturing Request"
+                            context="{'type': 'manufacturing', 'default_type': 'manufacturing'}"
+                            class="btn btn-primary"/>
+                    <button name="open_request_wizad" type="object"
+                            string="Stock Request" context="{'type': 'stock', 'default_type': 'stock'}"
+                            class="btn btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_manufacturing_action"
+                                type="object"
+                                class="oe_stat_button"
+                                invisible="manufacturing_count == 0"
+                                icon="fa-list">
+                            <field name="manufacturing_count" widget="statinfo" string="Manufacturing"/>
+                        </button>
+                        <button name="open_material_request_action"
+                                type="object"
+                                class="oe_stat_button" invisible="material_request_count == 0"
+                                icon="fa-list">
+                            <field name="material_request_count" widget="statinfo" string="Material Request"/>
+                        </button>
+                        <button name="open_stock_picking_action"
+                                type="object"
+                                class="oe_stat_button" invisible="stock_count == 0"
+                                icon="fa-list">
+                            <field name="stock_count" widget="statinfo" string="Stock"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="contract_id"/>
+                            <field name="product_id"/>
+                            <field name="code"/>
+
+                        </group>
+                        <group>
+                            <field name="product_uom_qty"/>
+                            <field name="product_uom_category_id" invisible="1"/>
+                            <field name="product_uom"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="manufacturing_department_tree_view" model="ir.ui.view">
+        <field name="name">manufacturing.department.tree.view</field>
+        <field name="model">manufacturing.department</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" duplicate="0">
+                <header>
+                    <button name="open_request_wizad" type="object"
+                            string="Material Request"
+                            context="{'type': 'material_request',  'default_type': 'material_request'}"
+                            class="btn btn-primary"/>
+                    <button name="open_request_wizad" type="object"
+                            string="Manufacturing Request"
+                            context="{'type': 'manufacturing', 'default_type': 'manufacturing'}"
+                            class="btn btn-primary"/>
+                    <button name="open_request_wizad" type="object"
+                            string="Stock Request" context="{'type': 'stock', 'default_type': 'stock'}"
+                            class="btn btn-primary"/>
+                </header>
+
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="code"/>
+                <field name="product_uom_qty"/>
+                <field name="product_uom"/>
+                <field name="contract_id"/>
+                <field name="contract_id"/>
+                <field name="qty_remain"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="manufacturing_department_menu"
+              name="Manufacturing Department"
+              action="green_contracts.manufacturing_department_action"
+              parent="green_contracts.departments_menu"
+              sequence="19"/>
+</odoo>

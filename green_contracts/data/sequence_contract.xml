@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <record id="contract_sequence_id" model="ir.sequence">
+            <field name="name">Contract Sequence</field>
+            <field name="code">contract.seq</field>
+            <field name="prefix">Contract-%(y)s/%(month)-s/%(day)s -</field>
+            <field name="padding">2</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="Purchase_rep_sequence_id" model="ir.sequence">
+            <field name="name">Purchase.order.rep</field>
+            <field name="code">Purchase.order.replacement</field>
+            <field name="prefix">Rep -%(y)s/%(month)-s/%(day)s -</field>
+            <field name="padding">2</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+    </data>
+</odoo>

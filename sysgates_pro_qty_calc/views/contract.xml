@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="model_contract_model_view_id_sale_id" model="ir.ui.view">
+        <field name="name">contract.contract.model.inherit.view.sale_line</field>
+        <field name="model">contract.contract</field>
+        <field name="inherit_id" ref="green_contracts.view_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//page[@name='planning']" position="after">
+                <page nam="Sales" string="Sales Lines">
+                    <field name="sale_line_id" mode="tree">
+                        <tree create="0" editable="top">
+                            <field name="product_id" readonly="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="contract_id" readonly="1"/>
+
+                            <field name="product_uom_qty" readonly="1"/>
+                            <field name="price_unit" readonly="1"/>
+                            <field name="is_pause" invisible="1" optional="hide"/>
+                            <field name="is_resumed" invisible="1" optional="hide"/>
+                            <field name="start_date" readonly="1"/>
+                            <field name="state_item" widget='badge'
+                                   decoration-success="state_installation == 'in-progress'"
+                                   decoration-danger="state_installation == 'pause'" readonly="1"/>
+                            <field name="state_installation" readonly="1"/>
+                            <field name="reason_pause" optional="hide" readonly="is_pause"/>
+                            <field name="attachment_pause" optional="hide" readonly="is_pause"/>
+                            <field name="attachment_resume" optional="hide" readonly="is_resumed"/>
+                            <button type="object" name="pause_installation" string="Pause" class="btn btn-danger"
+                                    invisible="state_item == 'pause'" readonly="1"/>
+                            <button type="object" name="resume_installation" string="Resume" class="btn btn-success"
+                                    readonly="1" invisible="state_item == 'in-progress'"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

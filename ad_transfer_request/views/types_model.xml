@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_signature_line_tree" model="ir.ui.view">
+        <field name="name">signature.tree</field>
+        <field name="model">signature</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" string="Signature">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_receiving_paper_line_tree" model="ir.ui.view">
+        <field name="name">receiving.paper.tree</field>
+        <field name="model">receiving.paper</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" string="Receiving Paper">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_type_distortion_line_tree" model="ir.ui.view">
+        <field name="name">type.distortion.tree</field>
+        <field name="model">type.distortion</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_type_distortion_line_form" model="ir.ui.view">
+        <field name="name">type.distortion.form</field>
+        <field name="model">type.distortion</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <notebook>
+                        <page sting="Bonus">
+                            <field name="type_distortion_line_ids" widget="section_and_note_one2many"
+                                   mode="tree">
+                                <tree editable="bottom">
+                                    <field name="floor_no"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="signature_department_action" model="ir.actions.act_window">
+        <field name="name">signature</field>
+        <field name="res_model">signature</field>
+        <field name="view_mode">tree</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="receiving_paper_department_action" model="ir.actions.act_window">
+        <field name="name">Receiving Paper</field>
+        <field name="res_model">receiving.paper</field>
+        <field name="view_mode">tree</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="type_distortion_department_action" model="ir.actions.act_window">
+        <field name="name">Type Distortion</field>
+        <field name="res_model">type.distortion</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="types_model_menu_id"
+              parent="green_contracts.config_menu"
+              sequence="70"
+              name="Types">
+
+        <menuitem id="Signature_model_menu_id"
+                  action="signature_department_action"
+                  name="Signature"/>
+
+        <menuitem id="receiving_paper_model_menu_id"
+                  action="receiving_paper_department_action"
+                  name="Receiving Paper"/>
+
+        <menuitem id="type_distortion_model_menu_id"
+                  action="type_distortion_department_action"
+                  name="Type Distortion"/>
+
+    </menuitem>
+</odoo>

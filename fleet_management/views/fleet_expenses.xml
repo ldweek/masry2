@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_fleet_exp" model="ir.actions.act_window">
+        <field name="name">fleet.expenses.action</field>
+        <field name="res_model">fleet.expenses</field>
+        <field name="view_mode">tree</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="fleet_expenses_view_tree" model="ir.ui.view">
+        <field name="name">fleet.expenses.tree</field>
+        <field name="model">fleet.expenses</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

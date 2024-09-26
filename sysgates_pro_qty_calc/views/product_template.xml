@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="product_template_form_inherit" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='group_standard_price']" position="inside">
+                <field name="equation_id" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

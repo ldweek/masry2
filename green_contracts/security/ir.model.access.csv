@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+contract_id,contract_name,model_contract_contract,,1,1,1,1
+technical_office_id,technical_office_name,model_technical_office,,1,1,1,1
+glass_factory_id,glass_factory_name,model_glass_factory,,1,1,1,1
+installations_department_id,installations_department_name,model_installations_department,,1,1,1,1
+manufacturing_department_id,manufacturing_department_name,model_manufacturing_department,,1,1,1,1
+operation_department_id,operation_department_name,model_operation_department,,1,1,1,1
+planning_department_id,planning_department_name,model_planning_department,,1,1,1,1
+purchase_department_id,purchase_department_name,model_purchase_department,,1,1,1,1
+warehouse_department_id,warehouse_department_name,model_warehouse_department,,1,1,1,1
+wizard_supply_chain_id,wizard_supply_chain_name,model_supply_chain_wizard,,1,1,1,1
+wizard_supply_chain_line_id,wizard_supply_chain_line_name,model_supply_chain_line_wizard,,1,1,1,1
+wizard_commission_id,wizard_commission_name,model_commission_wizard,,1,1,1,1
+

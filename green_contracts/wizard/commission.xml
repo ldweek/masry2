@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="commission_wizard_view_form" model="ir.ui.view">
+        <field name="name">commission.wizard.form.view</field>
+        <field name="model">commission.wizard</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="employee_id"/>
+                        <field name="rate"/>
+                    </group>
+
+                    <group>
+                        <field name="date_to"/>
+                        <field name="total_amount"/>
+                        <field name="commission_amount"/>
+                    </group>
+
+                </group>
+                <notebook>
+                    <page string="Invoice Line" name="invoice_lines">
+                        <field name="invoice_line_ids" widget="section_and_note_one2many" mode="tree"
+                               readonly="1">
+                            <tree editable="bottom" string="Journal Items" default_order="sequence, id">
+                                <control>
+                                    <create name="add_line_control" string="Add a line"/>
+                                    <create name="add_section_control" string="Add a section"
+                                            context="{'default_display_type': 'line_section'}"/>
+                                    <create name="add_note_control" string="Add a note"
+                                            context="{'default_display_type': 'line_note'}"/>
+                                </control>
+
+                                <!-- Displayed fields -->
+                                <field name="sequence" widget="handle"/>
+                                <field name="product_id" optional="show" widget="many2one_barcode"/>
+                                <field name="name" widget="section_and_note_text" optional="show"/>
+
+                                <field name="analytic_distribution" widget="analytic_distribution"
+                                       groups="analytic.group_analytic_accounting" optional="show"
+                                       options="{'product_field': 'product_id', 'account_field': 'account_id', 'amount_field': 'price_subtotal'}"/>
+                                <field name="quantity" optional="show"/>
+                                <field name="product_uom_category_id" column_invisible="True"/>
+                                <field name="product_uom_id" string="UoM" groups="uom.group_uom" optional="show"/>
+                                <field name="product_uom_id" column_invisible="True"/>
+                                <field name="price_unit" string="Price"/>
+                                <field name="discount" string="Disc.%" optional="hide"/>
+                                <field name="contract_id"/>
+                                <field name="total_amount_co" string="Total"/>
+                                <field name="tax_ids" widget="many2many_tags" column_invisible="1"
+                                       options="{'no_create': True}" optional="show"/>
+                                <field name="price_subtotal" string="Tax excl." column_invisible="1"/>
+                                <field name="price_total" string="Tax incl." column_invisible="1"/>
+                                <field name="partner_id" column_invisible="True"/>
+                                <field name="currency_id" column_invisible="True"/>
+                                <field name="company_id" column_invisible="True"/>
+                                <field name="company_currency_id" column_invisible="True"/>
+                                <field name="display_type" force_save="1" column_invisible="True"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="commission_wizard_action" model="ir.actions.act_window">
+        <field name="name">commission.wizard.action</field>
+        <field name="res_model">commission.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem name="Commission" id="commission_root_menu"
+              parent="contract_menu_root"
+              action="commission_wizard_action"/>
+
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="equation_equation_view_tree" model="ir.ui.view">
+        <field name="name">equation.equation.tree</field>
+        <field name="model">equation.equation</field>
+        <field name="arch" type="xml">
+            <tree string="Equations" editable="top" sample="1">
+                <field name="name"/>
+                <field name="var_1"/>
+                <field name="operator_r1"/>
+                <field name="var_2"/>
+                <field name="operator_r2" required="var_3"/>
+                <field name="var_3" required="operator_r2"/>
+                <field name="operator_r3" required="var_4"/>
+                <field name="var_4" required="operator_r3"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="equation_equation_action" model="ir.actions.act_window">
+        <field name="name">Equations</field>
+        <field name="res_model">equation.equation</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+</odoo>

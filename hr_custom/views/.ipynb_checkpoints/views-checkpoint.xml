@@ -1,0 +1,133 @@
+<odoo>
+  <data>
+        <record id="hr_contrac_form_inherit_bstt" model="ir.ui.view">
+            <field name="name">hr.contract.form.inherit.bstt</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name = 'hr_responsible_id']" position = 'after'>
+                    <field name = 'intern_date_start'/>
+                    <field name = 'intern_date_end'/>
+                    <field name = 'work_ankle_number'/>
+                    <field name = 'work_ankle_date'/>
+                    <field name = 'resg_date' attrs = '{"required" : [("state","=","cancel")]}'/>
+                </xpath>
+                <xpath expr="//group[@name = 'salary_info']" position="after">
+                    <group>
+                        <group name="allowances" string="Allowances">
+                            <field name="transportation_allowance"/>
+                            <field name="cloth_allowance"/>
+                            <field name="food_allowance"/>
+                            <field name="work_allowance"/>
+                            <field name="work_nature_allowance"/>
+                            <field name="effort_allowance"/>
+                            <field name="other_allowance"/>
+                            <field name="all"/>
+                            <field name="allowance_salary"/>
+                            <field name="worker_share"/>
+                            <field name="company_share"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    <record id="contract_check" model="ir.cron">
+       <field name="name">contract expiration</field>
+       <field name="model_id" ref="hr_contract.model_hr_contract"/>
+       <field name="state">code</field>
+       <field name="code">model.is_contract_ended()</field>
+       <field name="user_id" ref="base.user_root"/>
+       <field name='interval_number'>1</field>
+       <field name='interval_type'>days</field>
+       <field name="numbercall">-1</field>
+       <field name="doall" eval="False"/>
+   </record>
+          <record id="hr_employee_form_inherit_bstt" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.bstt</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='address_home_id']" position="attributes">
+                    <attribute name = 'string'>Contact</attribute>
+                </xpath>
+                <xpath expr="//field[@name='address_home_id']" position="after">
+                    <field name = 'my_address'/>
+                </xpath>
+                <xpath expr="//field[@name='birthday']" position="after">
+                    <field name="age"/>
+                </xpath>
+                <xpath expr="//field[@name='identification_id']" position="after">
+                    <field name="id_start_date"/>
+                </xpath>
+                <xpath expr="//h2[1]" position="after">
+                    <h2>
+                        <field name="district_id" placeholder="القطاع"/>
+                    </h2>               
+                </xpath>
+                <xpath expr="//field[@name='my_address']" position="after">
+                    <field name="state_id"/>
+                    <field name="center_id"/>
+                </xpath>
+                <xpath expr="//field[@name='certificate']" position="after">
+                    <field name="graduation_date"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string = "Attachment Checkboxes">
+                        <group>
+                            <field name = "check_box_1"/>
+                            <field name = "check_box_2"/>
+                            <field name = "check_box_3"/>
+                            <field name = "check_box_4"/>
+                            <field name = "check_box_5"/>
+                            <field name = "check_box_6"/>
+                            <field name = "check_box_7"/>
+                            <field name = "check_box_8"/>
+                            <field name = "check_box_9"/>
+                            <field name = "check_box_10"/>
+                            <field name = "check_box_11"/>
+                            <field name = "check_box_12"/>
+                            <field name = "check_box_13"/>
+                            <field name = "check_box_14"/>
+                            <field name = "check_box_15"/>
+                            <field name = "check_box_16"/>
+                            <field name = "check_box_17"/>
+                        </group>
+                    </page>
+                </xpath>
+                 
+                <xpath expr="//field[@name='has_work_permit']" position="after">
+                    <field name="employee_code"/>
+                    <field name="insurance_code"/>
+                    <field name="isnurance_job"/>
+                    <field name="insurance_state_id"/>
+                    <field name="insurance_date"/>
+                    <field name="medical_number"/>
+                    <field name="medical_start_date"/>
+                    <field name="medical_end_date"/>
+                    <field name="skill_start_date"/>
+                    <field name="skill_end_date"/>
+
+                    
+                    <field name="skill_level" attrs = "{'invisible': [('isnurance_job', 'in', (False,''))]}"/>
+                    <field name="coming_number"/>
+                    <field name="coming_date"/>
+                    <field name="medical_check_cret"/>
+                    <field name="medical_check" />
+                    <field name="recieved_check_id" />
+                    <field name="file_number" />
+                    <field name="add_number" />
+                    <field name="license_number" />
+                    <field name="license_date_end" />
+                    <field name="military_service_position" />
+                    <field name="millitary_cert_number" />
+                    <field name="millitary_end_date" />
+                    <field name="bank_number" />
+                    <field name="trans_place" />
+                    <field name="line_1" />
+                    <field name="line_2" />
+                    <field name="line_3" />
+                </xpath>
+            </field>
+        </record>
+  </data>
+</odoo>

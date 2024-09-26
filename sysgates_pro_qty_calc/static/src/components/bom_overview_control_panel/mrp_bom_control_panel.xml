@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <!--    <t t-name="BomOverviewComponentInherit" t-inherit="mrp.BomOverviewComponent" t-inherit-mode="extension" owl="1">-->
+    <!--        <xpath expr="//BomOverviewControlPanel" position="replace">-->
+    <!--            <BomOverviewControlPanel-->
+    <!--                    bomQuantity="state.bomQuantity"-->
+    <!--                    uomName="uomName"-->
+    <!--                    variants="variants"-->
+    <!--                    data="state.bomData"-->
+    <!--                    showOptions="state.showOptions"-->
+    <!--                    showVariants="showVariants"-->
+    <!--                    currentWarehouse="state.currentWarehouse"-->
+    <!--                    warehouses="warehouses"-->
+    <!--                    print.bind="onClickPrint"-->
+    <!--                    changeWarehouse.bind="onChangeWarehouse"-->
+    <!--                    changeVariant.bind="onChangeVariant"-->
+    <!--                    changeBomQuantity.bind="onChangeBomQuantity"-->
+    <!--                    changeDisplay.bind="onChangeDisplay"-->
+    <!--                    changeTall.bind="onChangeTall"-->
+    <!--                    precision="state.precision"-->
+    <!--            />-->
+    <!--        </xpath>-->
+    <!--    </t>-->
+
+    <t t-name="BomOverviewControlPanelInherit" t-inherit="mrp.BomOverviewControlPanel" t-inherit-mode="extension"
+       owl="1">
+
+        <xpath expr="//t[@t-set-slot='layout-actions']" position="inside">
+            <div class="d-flex gap-1 w-100">
+                <form class="d-flex flex-grow-1 gap-3 flex-column flex-md-row">
+                    <label class="visually-hidden" for="bom_quantity">Tall</label>
+                    <div t-attf-class="input-group align-items-center">
+                        <div class="col-4 col-md-auto pe-2 fw-bold">Tall</div>
+                        <input id="tall" type="number" step="any" t-on-change="ev => this.updateTall(ev)"
+                               t-on-keypress="ev => this.onKeyPress(ev)"
+                               t-att-value="props.tall"
+                               min="1" class="o_input form-control rounded-0"/>
+                    </div>
+
+                    <label class="visually-hidden" for="bom_quantity">Width</label>
+                    <div t-attf-class="input-group align-items-center">
+                        <div class="col-4 col-md-auto pe-2 fw-bold">Width</div>
+                        <input id="width" type="number" step="any" t-on-change="ev => this.updateWidth(ev)"
+                               t-on-keypress="ev => this.onKeyPress(ev)"
+                               t-att-value="props.width"
+                               min="1" class="o_input form-control rounded-0"/>
+                    </div>
+
+                    <label class="visually-hidden" for="bom_quantity">Height</label>
+                    <div t-attf-class="input-group align-items-center">
+                        <div class="col-4 col-md-auto pe-2 fw-bold">Height</div>
+                        <input id="height" type="number" step="any" t-on-change="ev => this.updateHeight(ev)"
+                               t-on-keypress="ev => this.onKeyPress(ev)"
+                               t-att-value="props.height"
+                               min="1" class="o_input form-control rounded-0"/>
+                    </div>
+
+                </form>
+            </div>
+        </xpath>
+
+    </t>
+
+</templates>

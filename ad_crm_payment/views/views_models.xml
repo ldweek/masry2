@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="way_action_id" model="ir.actions.act_window">
+        <field name="name">Way</field>
+        <field name="res_model">way</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="customer_type_action_id" model="ir.actions.act_window">
+        <field name="name">customer.type</field>
+        <field name="res_model">customer.type</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="way_view_tree" model="ir.ui.view">
+        <field name="name">Way.tree</field>
+        <field name="model">way</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="customer_type_view_tree" model="ir.ui.view">
+        <field name="name">customer.type.tree</field>
+        <field name="model">customer.type</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- CONFIGURATION -->
+    <menuitem
+            id="crm_menu_way"
+            name="Way"
+            parent="crm.crm_menu_root"
+            action="ad_crm_payment.way_action_id"
+            sequence="26"/>
+
+    <menuitem
+            id="crm_menu_customer_type"
+            name="Customer Type"
+            parent="crm.crm_menu_root"
+            action="ad_crm_payment.customer_type_action_id"
+            sequence="27"/>
+</odoo>

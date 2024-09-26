@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="hr_contract_form" model="ir.ui.view">
+            <field name="name">hr.contract.view</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='structure_type_id']" position="after">
+                    <field name="att_policy_id" required="1"/>
+                    <field name="shifts_line_id" string="working Shift"/>
+
+                </xpath>
+            </field>
+        </record>
+        <record id="leave_form" model="ir.ui.view">
+            <field name="name">hr.leave.view</field>
+            <field name="model">hr.leave.type</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="is_deduct" />
+                    <field name="is_mission" />
+                    <field name="is_sick" />
+                    <field name="is_deduct_leave" />
+                    <field name="is_pregnancy" />
+                    <field name="is_work_injury" />
+                    <field name="is_permission" />
+                </xpath>
+            </field>
+        </record>
+
+</odoo>
+
+

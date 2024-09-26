@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="group_set_to_draft_exp" model="res.groups">
+        <field name="name">Can set to draft Expenses</field>
+    </record>
+
+</odoo>

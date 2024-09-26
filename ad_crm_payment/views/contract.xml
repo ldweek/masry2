@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="crm_lead_view_form_add_payment" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit.event.crm.payment</field>
+        <field name="model">contract.contract</field>
+        <field name="inherit_id" ref="green_contracts.view_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='commission']//field[@name='technical_office_manager']" position="after">
+                <field name="employee_id"/>
+            </xpath>
+            <xpath expr="//page[@name='commission']//field[@name='dep_technical_office_manager']" position="after">
+                <field name="dep_employee_id"/>
+            </xpath>
+            <xpath expr="//page[@name='commission']//field[@name='external_commission']" position="before">
+                <field name="telesales_commission" string="Commission" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

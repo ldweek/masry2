@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    inherit views in the crm-->
+    <record id="crm_stage_form_inherit" model="ir.ui.view">
+        <field name="name">model.inherit.crm_stage_form</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_id']" position="after">
+                <field name="is_payment"/>
+                <field name="can_create_contract"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_view_form_add_payment_contract" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit.event.crm.payment</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_payment" type="object" class="oe_highlight" string="payment"
+                        invisible="not is_payment or is_paid"/>
+            </xpath>
+            <xpath expr="//header//button[@name='action_sale_quotations_new']" position="after">
+                  <button name="create_contract" type="object" class="btn btn-primary"
+                        string="Create Contract"
+                        invisible="type == 'lead' or not can_create_contract or is_created_contract"/>
+            </xpath>
+
+            <xpath expr="//group[2]" position="inside">
+                <field name="is_created_contract" invisible="1"/>
+                <field name="can_create_contract" invisible="1"/>
+                <field name="is_payment" invisible="1"/>
+                <field name="is_paid" invisible="1"/>
+                <field name="inspection_fees" invisible="not is_payment"/>
+                <field name="contract_id"/>
+                <field name="assign_to" string="Assign To"/>
+                <field name="inspection_exit_date" string="Inspection Request Date"/>
+                <field name="inspection_receiver"/>
+                <field name="employee_id"/>
+            </xpath>
+
+
+            <xpath expr="//group[@name='lead_info']" position="inside">
+                <field name="inspection_exit_date" string="Inspection Exit Date" required="type == 'lead'"/>
+                <field name="inspection_delivery_date" required="type == 'lead'"/>
+            </xpath>
+
+            <xpath expr="//field[@name='source_id']" position="attributes">
+                <attribute name="string">Channel</attribute>
+                <attribute name="required">0</attribute>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_payment" type="object"
+                        class="oe_stat_button" icon="fa-list"
+                        invisible="not id or type == 'lead' or count_payment == 0">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Payment</span>
+                        <field name="count_payment" class="o_stat_value" string="Payment"/>
+                    </div>
+
+                </button>
+            </xpath>
+
+            <xpath expr="//field[@name='email_cc']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='function']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='campaign_id']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='lead']//field[@name='source_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+                <attribute name="required">0</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']//field[@name='campaign_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+                <attribute name="required">0</attribute>
+            </xpath>
+            <xpath expr="//page[@name='extra']//field[@name='source_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+                <attribute name="required">0</attribute>
+            </xpath>
+            <xpath expr="//page[@name='extra']//field[@name='campaign_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+                <attribute name="required">0</attribute>
+            </xpath>
+
+
+            <xpath expr="//group[@name='lead_partner']" position="inside">
+                <field name="employee_id" required="type == 'lead'"/>
+                <field name="assign_to" string="Assign To"/>
+                <field name="shift"/>
+                <field name="customer_type_id"/>
+                <field name="way_id" required="type == 'lead'"/>
+                <field name="source_id" string="Chanel" required="type == 'lead'"/>
+                <field name="campaign_id" required="type == 'lead'"/>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']//field[@name='partner_id']" position="replace">
+                <field name="partner_id" widget="res_partner_many2one"
+                       context="{
+                                        'default_name': contact_name,
+                                        'default_title': title,
+                                        'default_street': street,
+                                        'default_street2': street2,
+                                        'default_city': city,
+                                        'default_state_id': state_id,
+                                        'default_zip': zip,
+                                        'default_country_id': country_id,
+                                        'default_function': function,
+                                        'default_phone': phone,
+                                        'default_mobile': mobile,
+                                        'default_email': email_from,
+                                        'default_user_id': user_id,
+                                        'default_team_id': team_id,
+                                        'default_website': website,
+                                        'default_lang': lang_code,
+                                        'show_vat': True
+                                    }" invisible="not is_partner_visible" required="type == 'opportunity'"/>
+                <field name="street"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
+

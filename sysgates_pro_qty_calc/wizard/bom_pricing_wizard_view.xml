@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bom_pricing_wizard_wizard_form" model="ir.ui.view">
+        <field name="name">bom.pricing.wizard.form</field>
+        <field name="model">bom.pricing.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Bom Pricing">
+                <sheet>
+                    <field name="crm_line_id" invisible="1"/>
+                    <field name="show_save" invisible="1"/>
+
+                    <group>
+                        <group>
+                            <group>
+                                <field name="tall"/>
+                            </group>
+                            <group>
+                                <field name="width"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="height"/>
+                            </group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="lines" string="lines">
+                            <field name="wizard_line_ids">
+                                <tree editable="bottom" sample="1">
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="price_unit"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <br/>
+                    <group>
+                        <group/>
+                        <group>
+                            <group/>
+                            <group>
+                                <field name="total"/>
+                            </group>
+                        </group>
+                    </group>
+                    <group/>
+
+                </sheet>
+                <footer>
+                    <button name="action_save" string="Save" type="object" class="btn-primary"
+                            invisible="not show_save"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="bom_pricing_wizard_action" model="ir.actions.act_window">
+        <field name="name">Bom Pricing</field>
+        <field name="res_model">bom.pricing.wizard</field>
+        <field name="view_id" ref="bom_pricing_wizard_wizard_form"/>
+    </record>
+
+</odoo>

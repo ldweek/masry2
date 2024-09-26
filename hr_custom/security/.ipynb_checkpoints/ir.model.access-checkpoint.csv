@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_company_custom_company_custom_1,company_custom.company_custom_1,model_hr_district,,1,1,1,1
+access_company_custom_company_custom_2,company_custom.company_custom_2,model_hr_center,,1,1,1,1
+access_company_custom_company_custom_3,company_custom.company_custom_3,model_hr_insurance_state,,1,1,1,1
+

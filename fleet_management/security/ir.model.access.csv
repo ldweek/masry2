@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+fleet_management_id,fleet_management_name,model_fleet_management,,1,1,1,1
+fleet_line_id,fleet_line_name,model_fleet_line,,1,1,1,1
+fleet_movement_line_model_id,fleet_movement_line_name,model_fleet_movement_line,,1,1,1,1
+fleet_expenses_id,fleet_expenses_name,model_fleet_expenses,,1,1,1,1
+city_id,city_name,model_res_city,,1,1,1,1

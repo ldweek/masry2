@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+transfer_wizard_id,transfer_wizard_name,model_transfer_wizard,,1,1,1,1
+type_distortion_id,type_distortion_id_name,model_type_distortion,,1,1,1,1
+type_distortion_line_id,type_distortion_line_id_name,model_type_distortion_line,,1,1,1,1
+receiving_paper_id,receiving_paper_name,model_receiving_paper,,1,1,1,1
+signature_id,_name,model_signature,,1,1,1,1
+transfer_line_id,transfer_line_id_name,model_transfer_line,,1,1,1,1
+distortion_order_id,distortion_order_id_name,model_distortion_order,,1,1,1,1
+distortion_order_line_id,distortion_order_line_id_name,model_distortion_order_line,,1,1,1,1
+

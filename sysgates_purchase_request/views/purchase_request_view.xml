@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="purchase_request_tree" model="ir.ui.view">
+        <field name="name">purchase.request.tree</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <tree string="PO Requests">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="manager_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="purchase_request_form" model="ir.ui.view">
+        <field name="name">purchase.request.form</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <form string="PO Request">
+                <header>
+                    <field name="show_confirm" invisible="1"/>
+                    <field name="show_approve" invisible="1"/>
+                    <field name="show_receive" invisible="1"/>
+                    <field name="order_id" invisible="1"/>
+
+                    <button type="object" name="action_confirm" string="Confirm" class="btn btn-primary" invisible="not show_confirm"/>
+                    <button type="object" name="action_approve" string="Approve" class="btn btn-primary" invisible="not show_approve"/>
+                    <button type="object" name="action_receive" string="Receive" class="btn btn-primary"
+                            groups="sysgates_purchase_request.purchase_requests_manager"
+                            invisible="not show_receive"/>
+                    <button type="object" name="action_reset_to_draft" string="Rest to Draft" class="btn btn-secondary"
+                            invisible="state != 'confirm'"/>
+
+                    <button type="object" name="action_create_po"
+                            groups="sysgates_purchase_request.purchase_requests_manager"
+                            string="Create Purchase Order" class="btn btn-primary" invisible="state != 'received' or order_id"/>
+
+                    <field name="state" widget="statusbar"/>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_po" type="object" string="Purchase Order" icon="fa-pencil-square-o" class="oe_stat_button" invisible="not order_id">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="order_id" widget="statinfo" nolabel="1" class="mr4"/>
+                                </span>
+                                <span class="o_stat_text">Purchase Order</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <group>
+                                <field name="employee_id"
+                                       options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"
+                                       readonly="state != 'draft'"/>
+                            </group>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="department_id" options="{'no_open': True}"/>
+                            <field name="manager_id" options="{'no_open': True}"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="request_lines" string="Request Lines">
+                            <field name="request_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="purchase_request_action" model="ir.actions.act_window">
+        <field name="name">PO Requests</field>
+        <field name="res_model">purchase.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

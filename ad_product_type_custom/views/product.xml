@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    inherit views in the -->
+    <record id="product_template_model_inherit_view_id" model="ir.ui.view">
+        <field name="name">product.template.inherit.view.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='service_tracking']" position="replace">
+                <field name="service_tracking" required="1" invisible="type not in  ('service', 'product') or not sale_ok"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

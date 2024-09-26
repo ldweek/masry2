@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="action_fleet_management_id" model="ir.actions.act_window">
+        <field name="name">fleet.management.action</field>
+        <field name="res_model">fleet.management</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="request_fleet_management_form" model="ir.ui.view">
+        <field name="name">fleet.management.form.view</field>
+        <field name="model">fleet.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group string="Personal Info" name="personal_info">
+                        <field name="date"/>
+                        <field name="day"/>
+                        <field name="partner_id"/>
+                        <field name="contract_ids" readonly="1" widget="many2many_tags"/>
+                        <field name="driver_id"/>
+                        <field name="driver_phone"/>
+                    </group>
+
+                    <group string="Car Info" name="car Info">
+                        <field name="car_id"/>
+                        <field name="car_number"/>
+                        <field name="model_id"/>
+                        <field name="car_type"/>
+                        <field name="vehicle_dependence"/>
+                        <field name="car_active"/>
+                    </group>
+
+                </group>
+
+                <notebook>
+                    <page string="Expenses Line" name="Line">
+                        <field
+                                name="line_ids"
+                                widget="section_and_note_one2many"
+                                mode="tree">
+                            <tree
+                                    string="Fleet Lines"
+                                    editable="bottom"
+                                    limit="200"
+                                    decoration-success="state == 'accepted'"
+                                    decoration-danger="state == 'refused'"
+                                    decoration-muted="state == 'draft'">
+                                <control>
+                                    <create name="add_product_control" string="Add a Line"/>
+                                </control>
+
+                                <field name="expense_id" string="Name"/>
+                                <field name="expenses"/>
+                                <field name="state" column_invisible="0"/>
+                                <button name="do_accept" string="Accept" type="object" class="btn btn-success"
+                                        invisible="state  in ['accepted', 'refused']"/>
+                                <button name="do_refuse" string="Refuse" type="object" class="btn btn-danger"
+                                        invisible="state in ['accepted', 'refused']"/>
+                                <button name="set_to_draft" string="Set to Draft" type="object" class="btn btn-primary"
+                                        invisible="state == 'draft'"
+                                        groups="fleet_management.group_set_to_draft_exp"/>
+                            </tree>
+                        </field>
+                        <group col="12" class="oe_invoice_lines_tab">
+                            <group colspan="10">
+
+                            </group>
+                            <group colspan="2">
+                                <field name="total_expense" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </group>
+
+                    </page>
+                    <page string="Movement line" name="Movement">
+                        <field
+                                name="movement_ids"
+                                widget="section_and_note_one2many"
+                                mode="tree">
+                            <tree
+                                    string="Fleet Lines"
+                                    editable="bottom"
+                                    limit="200"
+                                   >
+                                <control>
+                                    <create name="add_product_control" string="Add a Line"/>
+                                </control>
+
+                                <field name="contract_id"/>
+                                <field name="analytic_account_id"/>
+                                <field name="meter_before_move"/>
+                                <field name="meter_after_move"/>
+                                <field name="starting_point"/>
+                                <field name="destination_address"/>
+                                <field name="time_movement" widget="float_time"/>
+                                <field name="time_arrival" widget="float_time"/>
+                                <field name="duration_movement" widget="float_time"/>
+                                <field name="Kilometers_movement"/>
+                                <field name="liters_gasoline"/>
+                                <field name="cost_liter_gasoline"/>
+                                <field name="cost_movement"/>
+                                <field name="total_cost"/>
+                            </tree>
+                        </field>
+                        <group col="12" class="oe_invoice_lines_tab">
+                            <group colspan="10">
+
+                            </group>
+                            <group colspan="2">
+                                <field name="total_movement" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </group>
+
+                    </page>
+
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="fleet_management_menu_root"
+              name="Fleet Management "
+              active="True"
+              sequence="31">
+
+        <menuitem id="fleet_management_menu" name="Fleet Management"
+                  action="fleet_management.action_fleet_management_id" sequence="10"/>
+        <menuitem id="city_menu" name="City" sequence="11" action="fleet_management.action_res_city"/>
+        <menuitem id="fleet_expenses_menu" name="Fleet Expenses" sequence="12"
+                  action="fleet_management.action_fleet_exp"/>
+
+    </menuitem>
+
+</odoo>

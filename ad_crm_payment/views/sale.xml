@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="measure_model_inherit_view_id" model="ir.ui.view">
+        <field name="name">measure.model.inherit.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree/field[@name='product_uom_qty']" position="before">
+                <field name="tall"/>
+                <field name="width"/>
+                <field name="height"/>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

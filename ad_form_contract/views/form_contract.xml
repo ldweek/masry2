@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    inherit views in the -->
+    <record id="form_contracts_action" model="ir.actions.act_window">
+        <field name="name">form.contracts</field>
+        <field name="res_model">form.contracts</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="stock_valuation_layer_form" model="ir.ui.view">
+        <field name="name">form.contracts.form</field>
+        <field name="model">form.contracts</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button type="object" name="print_contract_form" string="Print" class="btn btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="contract_id"/>
+                        </group>
+                        <group>
+                            <field name="date" string="Date"/>
+                            <field name="contract_date"/>
+                            <field name="start_date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="stock_valuation_layer_tree" model="ir.ui.view">
+        <field name="name">form.contracts.tree</field>
+        <field name="model">form.contracts</field>
+        <field name="arch" type="xml">
+            <tree default_order="id desc">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <button name="contract_date"/>
+                <field name="start_date"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <menuitem id="contract_menu_root"
+              name="Form Contracts"
+              active="True"
+              sequence="30">
+        <menuitem id="form_contract_menu" name="Form Contract" action="form_contracts_action" sequence="10"/>
+
+    </menuitem>
+
+
+</odoo>

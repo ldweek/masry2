@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="material_request_line_tree" model="ir.ui.view">
+        <field name="name">material.request.tree</field>
+        <field name="model">material.request</field>
+        <field name="arch" type="xml">
+            <tree string="Material Request List" create="0" edit="0" default_order="id desc" duplicate="0">
+                <field name="date_request"/>
+                <field name="user_id"/>
+                <field name="employee_id"/>
+                <field name="contract_id"/>
+                <field name="analytic_account_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="material_request_line_form" model="ir.ui.view">
+        <field name="name">material.request.form</field>
+        <field name="model">material.request</field>
+        <field name="arch" type="xml">
+            <form string="Material Request Form" create="0" edit="0" delete="0"  duplicate="0">
+                <header>
+                    <button name="create_po" data-hotkey="x" type="object" invisible="state in ('done', 'cancel')"
+                            string="Create PO" class="btn-primary"/>
+                    <button name="action_done" string="Done" type="object"
+                            class="btn-primary" invisible="state in ('done', 'cancel')"/>
+                    <button name="action_cancel" type="object" data-hotkey="x" string="Cancel"
+                            class="btn-secondary" invisible="state in ('done', 'cancel')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_purchase_action"
+                                type="object"
+                                class="oe_stat_button"
+                                invisible="purchase_count == 0"
+                                icon="fa-list">
+                            <field name="purchase_count" widget="statinfo" string="Purchase"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_request"/>
+                            <field name="ref"/>
+                            <field name="user_id"/>
+                        </group>
+
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="contract_id"/>
+                            <field name="analytic_account_id"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Line" edit="0" create="0" delete="0">
+                            <field name="line_ids">
+                                <tree>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_id"/>
+                                </tree>
+                            </field>
+
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="material_request_line_search" model="ir.ui.view">
+        <field name="name">material.request.search</field>
+        <field name="model">material.request</field>
+        <field name="arch" type="xml">
+            <search string="Search Leads">
+                <field name="contract_id"/>
+                <field name="analytic_account_id"/>
+                <separator/>
+                <filter string="Contract"
+                        name="contract_id"
+                        domain="[('contract_id', '=', True)]"/>
+                <filter string="Analytic Account"
+                        name="analytic_account_id"
+                        domain="[('analytic_account_id', '=', True)]"/>
+                <separator/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Contract" name="contract_id" context="{'group_by':'contract_id'}"/>
+                    <filter string="Analytic Account" name="analytic_account_id"
+                            context="{'group_by':'analytic_account_id'}"/>
+
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="material_request_action_id" model="ir.actions.act_window">
+        <field name="name">material.request.action</field>
+        <field name="res_model">material.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Material Request
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="material_request_menu_id" name="Material Request"
+              action="matrial_request.material_request_action_id"
+              parent="purchase.menu_procurement_management"
+              sequence="1"/>
+
+    <record id="action_create_po" model="ir.actions.server">
+        <field name="name">Create PO</field>
+        <field name="model_id" ref="matrial_request.model_material_request"/>
+        <field name="binding_model_id" ref="matrial_request.model_material_request"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            'name': 'Purchase Order',
+            'type': 'ir.actions.act_window',
+            'res_model': 'purchase.order',
+            'view_mode': 'form',
+            "view_type": "form",
+            'target': 'current',
+            'context': {'default_order_line' : record.prepare_po_context(records)}
+            }
+        </field>
+    </record>
+
+
+</odoo>

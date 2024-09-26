@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="crm_lead_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page name="products_lines" string="Products">
+                    <field name="line_ids">
+                        <tree editable="bottom" sample="1">
+                            <field name="product_id"/>
+                            <field name="tall" readonly="1" force_save="1"/>
+                            <field name="width" readonly="1" force_save="1"/>
+                            <field name="height" readonly="1" force_save="1"/>
+                            <field name="total" readonly="1" force_save="1"/>
+                            <button type="object" name="open_pricing_calc_wizard" string="Pricing Calc"
+                                    class="btn btn-primary"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="manufacturing_request_line_tree" model="ir.ui.view">
+        <field name="name">manufacturing.request.tree</field>
+        <field name="model">manufacturing.request</field>
+        <field name="arch" type="xml">
+            <tree string="manufacturing Request List" create="0" edit="0" default_order="id desc" duplicate="0" delete="1">
+                <field name="date_request"/>
+                <field name="user_request_id"/>
+                <field name="product_id"/>
+                <field name="employee_id"/>
+                <field name="contract_id"/>
+                <field name="analytic_account_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="manufacturing_request_line_form" model="ir.ui.view">
+        <field name="name">manufacturing.request.form</field>
+        <field name="model">manufacturing.request</field>
+        <field name="arch" type="xml">
+            <form string="manufacturing Request Form" create="0" edit="0" delete="0" duplicate="0">
+                <header>
+                    <button name="create_mrp_production" data-hotkey="x" type="object"
+                            invisible="state in ('done', 'cancel')"
+                            string="Create MO" class="btn-primary"/>
+                    <button name="action_done" string="Done" type="object"
+                            class="btn-primary" invisible="state in ('done', 'cancel')"/>
+                    <button name="action_cancel" type="object" data-hotkey="x" string="Cancel"
+                            class="btn-secondary" invisible="state in ('done', 'cancel')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="progress,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date_request"/>
+                            <field name="ref"/>
+                            <field name="user_request_id"/>
+                            <field name="employee_id"/>
+                        </group>
+
+                        <group>
+                            <field name="product_id"/>
+                            <field name="product_uom_qty"/>
+                            <field name="contract_id"/>
+                            <field name="analytic_account_id"/>
+                        </group>
+
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="manufacturing_request_line_search" model="ir.ui.view">
+        <field name="name">manufacturing.request.search</field>
+        <field name="model">manufacturing.request</field>
+        <field name="arch" type="xml">
+            <search string="Search Leads">
+                <field name="contract_id"/>
+                <field name="analytic_account_id"/>
+                <separator/>
+                <filter string="Contract"
+                        name="contract_id"
+                        domain="[('contract_id', '=', True)]"/>
+                <filter string="Analytic Account"
+                        name="analytic_account_id"
+                        domain="[('analytic_account_id', '=', True)]"/>
+                <separator/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Contract" name="contract_id" context="{'group_by':'contract_id'}"/>
+                    <filter string="Analytic Account" name="analytic_account_id"
+                            context="{'group_by':'analytic_account_id'}"/>
+
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="manufacturing_request_action_id" model="ir.actions.act_window">
+        <field name="name">manufacturing.request.action</field>
+        <field name="res_model">manufacturing.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Manufacturing Request
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="manufacturing_request_menu_id" name="manufacturing Request"
+              action="mo_request.manufacturing_request_action_id"
+              parent="mrp.menu_mrp_manufacturing"
+              sequence="1"/>
+
+
+</odoo>

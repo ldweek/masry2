@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_transfer_wizard_form" model="ir.ui.view">
+        <field name="name">transfer.wizard.form</field>
+        <field name="model">transfer.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Transfer Wizard">
+                <group>
+                    <field name="contract_id"/>
+                    <field name="analytic_account_id"/>
+                    <field name="partner_id"/>
+                </group>
+                <notebook readonly="0">
+                    <page name="lines" string="lines" readonly="0">
+                        <field name="transfer_line_ids">
+                            <tree sample="1" editable="bottom" create="0" duplicate="0" >
+                                <field name="selected" string="Select"/>
+                                <field name="product_id" readonly="1" force_save="1" string="Product"/>
+                                <field name="sale_line_id" column_invisible="1" string="sale line"/>
+                                <field name="available_qty_to_distort"  string="Qty Available to Distort"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+                    <button name="action_request" string="Request" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="transfer_request_action_id" model="ir.actions.act_window">
+        <field name="name">transfer.transfer.action</field>
+        <field name="res_model">transfer.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="ad_transfer_request.view_transfer_wizard_form"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new transfer Request
+            </p>
+        </field>
+    </record>
+
+
+</odoo>
+

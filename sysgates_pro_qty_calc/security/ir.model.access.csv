@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_equation_equation,access_equation_equation,model_equation_equation,base.group_user,1,1,1,1
+access_crm_lead_line,access_crm_lead_line,model_crm_lead_line,base.group_user,1,1,1,1
+access_bom_pricing_wizard,access_bom_pricing_wizard,model_bom_pricing_wizard,base.group_user,1,1,1,1
+access_bom_pricing_wizard_line,access_bom_pricing_wizard_line,model_bom_pricing_wizard_line,base.group_user,1,1,1,1
+access_pricing_menu,access_pricing_menu,model_pricing_menu,base.group_user,1,1,1,1

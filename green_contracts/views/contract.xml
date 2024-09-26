@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_contract_form" model="ir.ui.view">
+        <field name="name">confirmed.contract.form</field>
+        <field name="model">contract.contract</field>
+        <field name="arch" type="xml">
+            <form string="confirmeds contract" class="o_confirmed_contract">
+                <header>
+
+                    <field name="locked" invisible="1"/>
+                    <button name="action_unlock" type="object" string="Unlock" invisible="not locked"/>
+                    <button name="action_distribution_for_departments" type="object" string="Unlock"
+                            invisible="not locked or technical_office_ids"/>
+                    <button name="open_purchase_replacement" type="object" string="Error Replacement"
+                            invisible="locked"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ['draft', 'confirmed'] or not id or locked" data-hotkey="x"/>
+                    <button name="action_draft" invisible="state != 'cancel'" type="object" string="Set to Draft"
+                            data-hotkey="w"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,executive_inspection,cancel"/>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_payment_action"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="payment_count" widget="statinfo" string="Payments"/>
+                        </button>
+                        <button name="open_invoices_action"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                        <button name="open_sale_action"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="sale_order_count" widget="statinfo" string="Sales Order"/>
+                        </button>
+                        <button name="open_purchase_replacement_action"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="purchase_order_rep_count" widget="statinfo" string="Purchase Rep"/>
+                        </button>
+                        <button name="open_purchase_action"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="purchase_order_count" widget="statinfo" string="Purchases"/>
+                        </button>
+                        <button name="open_project_action"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="project_count" widget="statinfo" string="Projects"/>
+                        </button>
+                        <button name="open_mrp_action"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="mrp_order_count" widget="statinfo" string="Manufacturing"/>
+                        </button>
+                        <button name="open_tasks_action"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="task_count" widget="statinfo" string="Tasks"/>
+                        </button>
+                    </div>
+                    <div class="badge rounded-pill text-bg-secondary float-end fs-6 bcontract-0"
+                         invisible="not locked">
+                        <i class="fa fa-lock"/>
+                        Locked
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" widget="CopyClipboardText  "/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="contract_date"/>
+                            <field name="project_name"/>
+                            <field name="Subject_contract"/>
+                            <field name="opportunity_id"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="analytic_account_id"/>
+
+                        </group>
+                    </group>
+
+                    <group name="confirmed_header">
+                        <group name="partner_details" string="Second Party">
+
+                            <field name="partner_id" required="1"
+                                   widget="res_partner_many2one"
+                                   context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}"
+                                   placeholder="Type to find a customer..."
+                                   readonly="state in ['cancel', 'confirmed']"/>
+
+                            <field name="partner_phone"/>
+
+                            <!--  second Party< -->
+                            <field name="legal_rep_sp"/>
+                            <field name="lrp_sp_phone"/>
+                            <field name="address_legal_Corresponding"/>
+                            <field name="national_id" string="National ID"/>
+                            <field name="address_implementation"/>
+
+                        </group>
+                        <group name="contract_details" string="First Party">
+
+
+                            <field name="has_active_pricelist" invisible="1"/>
+                            <field name="show_update_pricelist" invisible="1"/>
+                            <label for="pricelist_id"
+
+                                   invisible="not has_active_pricelist"/>
+                            <div
+                                    class="o_row"
+                                    invisible="not has_active_pricelist">
+                                <field name="pricelist_id" options="{'no_open':True,'no_create': True}"
+                                       readonly="state in ['cancel', 'confirmed']"/>
+                            </div>
+                            <field name="company_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+
+                            <field name="legal_rep"/>
+                            <field name="tech_eng"/>
+                            <field name="executive_eng"/>
+                            <field name="is_tax"/>
+                            <field name="tax_details_binary" invisible="not is_tax" required="is_tax"/>
+                        </group>
+                    </group>
+                    <button name="do_distribution_to_departments" string="Distribution" type="object"
+                            class="btn btn-primary"/>
+                    <notebook>
+                        <page string="Technical Office" name="technical_office">
+                            <field
+                                    name="technical_office_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    readonly="state == 'cancel' or locked">
+                                <tree
+                                        string="Contact Lines"
+                                        editable="bottom"
+                                        limit="200"
+
+                                >
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note"
+                                                context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+
+                                    <field name="name" widget="handle"/>
+                                    <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="product_uom_category_id" column_invisible="True"/>
+                                    <field name="product_type" column_invisible="True"/>
+                                    <field name="product_updatable" column_invisible="True"/>
+                                    <field
+                                            name="product_id"
+                                            readonly="not product_updatable"
+                                            required="not display_type"
+                                            force_save="1"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+
+                                    }"
+                                            options="{
+                                        'no_open': True,
+                                    }"
+
+                                            widget="sol_product_many2one"/>
+                                    <field name="product_template_id"
+                                           string="Product"
+                                           column_invisible="True"
+                                           readonly="not product_updatable"
+                                           required="not display_type"
+                                           context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,}"
+                                           options="{'no_open': True,}"
+                                           widget="sol_product_many2one"
+                                           placeholder="Type to find a product..."/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name='code'/>
+                                    <field
+                                            name="product_uom_qty"
+                                            decoration-info="(not display_type)" decoration-bf="(not display_type)"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id
+                                    }"/>
+                                    <field
+                                            name="product_uom"
+                                            force_save="1"
+                                            string="UoM"
+                                            required="not display_type"
+                                            context="{'company_id': parent.company_id}"
+                                            options='{"no_open": True}'
+                                            optional="show"/>
+
+                                    <field name="product_packaging_qty" invisible="not product_id"
+                                           groups="product.group_stock_packaging" optional="show"/>
+
+                                    <!--                                    <field name="discount" string="Disc.%" groups="product.group_discount_per_so_line"-->
+                                    <!--                                           optional="show"/>-->
+                                    <!--                                    <field name="price_subtotal"/>-->
+                                    <!--                                    &lt;!&ndash;                                    <field name="price_subtotal" string="Tax excl."/>&ndash;&gt;-->
+                                    <!--                                    <field name="price_total" optional="hide"/>-->
+                                    <!--                                    &lt;!&ndash;                                    <field name="price_total" string="Tax incl." optional="hide"/>&ndash;&gt;-->
+                                    <!--                                    &lt;!&ndash; Others fields &ndash;&gt;-->
+                                    <!--                                    <field name="state" column_invisible="True"/>-->
+                                    <!--                                    <field name="currency_id" column_invisible="True"/>-->
+                                    <!--                                    <field name="company_id" column_invisible="True"/>-->
+                                    <field name="distribution"/>
+                                    <field name="contract_id" readonly='1' column_invisible="not parent.id"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
+                        </page>
+                        <page string="Glass Factory" name="glass_office">
+                            <field
+                                    name="glass_factory_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    readonly="state == 'cancel' or locked">
+                                <tree
+                                        string="Contact Lines"
+                                        editable="bottom"
+                                        limit="200"
+                                        create="0"
+                                        edit="0"
+
+                                >
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note"
+                                                context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+
+                                    <field name="name" widget="handle"/>
+                                    <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="product_uom_category_id" column_invisible="True"/>
+                                    <field name="product_type" column_invisible="True"/>
+                                    <field name="product_updatable" column_invisible="True"/>
+                                    <field
+                                            name="product_id"
+                                            readonly="not product_updatable"
+                                            required="not display_type"
+                                            force_save="1"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+
+                                    }"
+                                            options="{
+                                        'no_open': True,
+                                    }"
+
+                                            widget="sol_product_many2one"/>
+                                    <field name="product_template_id"
+                                           string="Product"
+                                           column_invisible="True"
+                                           readonly="not product_updatable"
+                                           required="not display_type"
+                                           context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+                                    }"
+                                           options="{
+                                        'no_open': True,
+                                    }"
+                                           widget="sol_product_many2one"
+                                           placeholder="Type to find a product..."/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name='code'/>
+                                    <field
+                                            name="product_uom_qty"
+                                            decoration-info="(not display_type)" decoration-bf="(not display_type)"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id
+                                    }"/>
+                                    <field
+                                            name="product_uom"
+                                            force_save="1"
+                                            string="UoM"
+                                            required="not display_type"
+                                            context="{'company_id': parent.company_id}"
+                                            groups="uom.group_uom"
+                                            options='{"no_open": True}'
+                                            optional="show"/>
+
+                                    <field name="product_packaging_qty" invisible="not product_id"
+                                           groups="product.group_stock_packaging" optional="show"/>
+
+                                    <!--                                    <field name="discount" string="Disc.%" groups="product.group_discount_per_so_line"-->
+                                    <!--                                           optional="show"/>-->
+                                    <!--                                    <field name="price_subtotal"/>-->
+                                    <!--                                    &lt;!&ndash;                                    <field name="price_subtotal" string="Tax excl."/>&ndash;&gt;-->
+                                    <!--                                    <field name="price_total" optional="hide"/>-->
+                                    <!--                                    &lt;!&ndash;                                    <field name="price_total" string="Tax incl." optional="hide"/>&ndash;&gt;-->
+                                    <!--                                    &lt;!&ndash; Others fields &ndash;&gt;-->
+                                    <!--                                    <field name="state" column_invisible="True"/>-->
+                                    <!--                                    <field name="currency_id" column_invisible="True"/>-->
+                                    <!--                                    <field name="company_id" column_invisible="True"/>-->
+                                    <field name="contract_id" readonly='1' column_invisible="not parent.id"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
+                        </page>
+                        <page string="Operations Dep" name="operations_dep">
+                            <field
+                                    name="operation_ids"
+                                    widget="operation_ids"
+                                    mode="tree"
+                                    readonly="state == 'cancel' or locked">
+                                <tree
+                                        string="Contact Lines"
+                                        editable="bottom"
+                                        limit="200"
+                                        create="0"
+                                        edit="0"
+                                >
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note"
+                                                context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+
+                                    <field name="name" widget="handle"/>
+                                    <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="product_uom_category_id" column_invisible="True"/>
+                                    <field name="product_type" column_invisible="True"/>
+                                    <field name="product_updatable" column_invisible="True"/>
+                                    <field
+                                            name="product_id"
+                                            readonly="not product_updatable"
+                                            required="not display_type"
+                                            force_save="1"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+
+                                    }"
+                                            options="{
+                                        'no_open': True,
+                                    }"
+
+                                            widget="sol_product_many2one"/>
+                                    <field name="product_template_id"
+                                           string="Product"
+                                           column_invisible="True"
+                                           readonly="not product_updatable"
+                                           required="not display_type"
+                                           context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+                                    }"
+                                           options="{
+                                        'no_open': True,
+                                    }"
+                                           widget="sol_product_many2one"
+                                           placeholder="Type to find a product..."/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name='code'/>
+                                    <field
+                                            name="product_uom_qty"
+                                            decoration-info="(not display_type)" decoration-bf="(not display_type)"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id
+                                    }"/>
+                                    <field
+                                            name="product_uom"
+                                            force_save="1"
+                                            string="UoM"
+                                            required="not display_type"
+                                            context="{'company_id': parent.company_id}"
+                                            groups="uom.group_uom"
+                                            options='{"no_open": True}'
+                                            optional="show"/>
+
+                                    <field name="product_packaging_qty" invisible="not product_id"
+                                           groups="product.group_stock_packaging" optional="show"/>
+                                    <field name="contract_id" readonly='1' column_invisible="not parent.id"/>
+
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
+                        </page>
+                        <page string="Purchasing" name="purchasing">
+                            <field
+                                    name="purchasing_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    readonly="state == 'cancel' or locked">
+                                <tree
+                                        string="Contact Lines"
+                                        editable="bottom"
+                                        limit="200"
+                                        create="0"
+                                        edit="0"
+                                >
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note"
+                                                context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+
+                                    <field name="name" widget="handle"/>
+                                    <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="product_uom_category_id" column_invisible="True"/>
+                                    <field name="product_type" column_invisible="True"/>
+                                    <field name="product_updatable" column_invisible="True"/>
+                                    <field
+                                            name="product_id"
+                                            readonly="not product_updatable"
+                                            required="not display_type"
+                                            force_save="1"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+
+                                    }"
+                                            options="{
+                                        'no_open': True,
+                                    }"
+
+                                            widget="sol_product_many2one"/>
+                                    <field name="product_template_id"
+                                           string="Product"
+                                           column_invisible="True"
+                                           readonly="not product_updatable"
+                                           required="not display_type"
+                                           context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+                                    }"
+                                           options="{
+                                        'no_open': True,
+                                    }"
+                                           widget="sol_product_many2one"
+                                           placeholder="Type to find a product..."/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name='code'/>
+                                    <field
+                                            name="product_uom_qty"
+                                            decoration-info="(not display_type)" decoration-bf="(not display_type)"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id
+                                    }"/>
+                                    <field
+                                            name="product_uom"
+                                            force_save="1"
+                                            string="UoM"
+                                            required="not display_type"
+                                            context="{'company_id': parent.company_id}"
+                                            groups="uom.group_uom"
+                                            options='{"no_open": True}'
+                                            optional="show"/>
+
+                                    <field name="product_packaging_qty" invisible="not product_id"
+                                           groups="product.group_stock_packaging" optional="show"/>
+
+
+                                    <field name="contract_id" readonly='1' column_invisible="not parent.id"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
+                        </page>
+                        <page string="Manufacturing" name="manufacturing">
+                            <field
+                                    name="manufacturing_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    readonly="state == 'cancel' or locked">
+                                <tree
+                                        string="Contact Lines"
+                                        editable="bottom"
+                                        limit="200"
+                                        create="0"
+                                        edit="0"
+                                >
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note"
+                                                context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+
+                                    <field name="name" widget="handle"/>
+                                    <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="product_uom_category_id" column_invisible="True"/>
+                                    <field name="product_type" column_invisible="True"/>
+                                    <field name="product_updatable" column_invisible="True"/>
+                                    <field
+                                            name="product_id"
+                                            readonly="not product_updatable"
+                                            required="not display_type"
+                                            force_save="1"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+
+                                    }"
+                                            options="{
+                                        'no_open': True,
+                                    }"
+
+                                            widget="sol_product_many2one"/>
+                                    <field name="product_template_id"
+                                           string="Product"
+                                           column_invisible="True"
+                                           readonly="not product_updatable"
+                                           required="not display_type"
+                                           context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+                                    }"
+                                           options="{
+                                        'no_open': True,
+                                    }"
+                                           widget="sol_product_many2one"
+                                           placeholder="Type to find a product..."/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name='code'/>
+                                    <field
+                                            name="product_uom_qty"
+                                            decoration-info="(not display_type)" decoration-bf="(not display_type)"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id
+                                    }"/>
+                                    <field
+                                            name="product_uom"
+                                            force_save="1"
+                                            string="UoM"
+                                            required="not display_type"
+                                            context="{'company_id': parent.company_id}"
+                                            groups="uom.group_uom"
+                                            options='{"no_open": True}'
+                                            optional="show"/>
+
+                                    <field name="product_packaging_qty" invisible="not product_id"
+                                           groups="product.group_stock_packaging" optional="show"/>
+                                    <field name="contract_id" readonly='1' column_invisible="not parent.id"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
+                        </page>
+                        <page string="Warehouse" name="warehouse">
+                            <field
+                                    name="warehouse_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    readonly="state == 'cancel' or locked">
+                                <tree
+                                        string="Contact Lines"
+                                        editable="bottom"
+                                        limit="200"
+                                        create="0"
+                                        edit="0"
+                                >
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note"
+                                                context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+
+                                    <field name="name" widget="handle"/>
+                                    <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="product_uom_category_id" column_invisible="True"/>
+                                    <field name="product_type" column_invisible="True"/>
+                                    <field name="product_updatable" column_invisible="True"/>
+                                    <field
+                                            name="product_id"
+                                            readonly="not product_updatable"
+                                            required="not display_type"
+                                            force_save="1"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+
+                                    }"
+                                            options="{
+                                        'no_open': True,
+                                    }"
+
+                                            widget="sol_product_many2one"/>
+                                    <field name="product_template_id"
+                                           string="Product"
+                                           column_invisible="True"
+                                           readonly="not product_updatable"
+                                           required="not display_type"
+                                           context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+                                    }"
+                                           options="{
+                                        'no_open': True,
+                                    }"
+                                           widget="sol_product_many2one"
+                                           placeholder="Type to find a product..."/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name='code'/>
+                                    <field
+                                            name="product_uom_qty"
+                                            decoration-info="(not display_type)" decoration-bf="(not display_type)"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id
+                                    }"/>
+                                    <field
+                                            name="product_uom"
+                                            force_save="1"
+                                            string="UoM"
+                                            required="not display_type"
+                                            context="{'company_id': parent.company_id}"
+                                            groups="uom.group_uom"
+                                            options='{"no_open": True}'
+                                            optional="show"/>
+
+                                    <field name="product_packaging_qty" invisible="not product_id"
+                                           groups="product.group_stock_packaging" optional="show"/>
+
+                                    <!--                                    <field name="discount" string="Disc.%" groups="product.group_discount_per_so_line"-->
+                                    <!--                                           optional="show"/>-->
+                                    <!--                                    <field name="price_subtotal"/>-->
+                                    <!--                                    &lt;!&ndash;                                    <field name="price_subtotal" string="Tax excl."/>&ndash;&gt;-->
+                                    <!--                                    <field name="price_total" optional="hide"/>-->
+                                    <!--                                    &lt;!&ndash;                                    <field name="price_total" string="Tax incl." optional="hide"/>&ndash;&gt;-->
+                                    <!--                                    &lt;!&ndash; Others fields &ndash;&gt;-->
+                                    <!--                                    <field name="state" column_invisible="True"/>-->
+                                    <!--                                    <field name="currency_id" column_invisible="True"/>-->
+                                    <!--                                    <field name="company_id" column_invisible="True"/>-->
+                                    <field name="contract_id" readonly='1' column_invisible="not parent.id"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
+                        </page>
+                        <page string="Installations" name="installations">
+                            <field
+                                    name="installation_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    readonly="state == 'cancel' or locked">
+                                <tree
+                                        string="Contact Lines"
+                                        editable="bottom"
+                                        limit="200"
+                                        create="0"
+                                        edit="0"
+                                >
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note"
+                                                context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+
+                                    <field name="name" widget="handle"/>
+                                    <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="product_uom_category_id" column_invisible="True"/>
+                                    <field name="product_type" column_invisible="True"/>
+                                    <field name="product_updatable" column_invisible="True"/>
+                                    <field
+                                            name="product_id"
+                                            readonly="not product_updatable"
+                                            required="not display_type"
+                                            force_save="1"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+
+                                    }"
+                                            options="{
+                                        'no_open': True,
+                                    }"
+
+                                            widget="sol_product_many2one"/>
+                                    <field name="product_template_id"
+                                           string="Product"
+                                           column_invisible="True"
+                                           readonly="not product_updatable"
+                                           required="not display_type"
+                                           context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+                                    }"
+                                           options="{
+                                        'no_open': True,
+                                    }"
+                                           widget="sol_product_many2one"
+                                           placeholder="Type to find a product..."/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name='code'/>
+                                    <field
+                                            name="product_uom_qty"
+                                            decoration-info="(not display_type)" decoration-bf="(not display_type)"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id
+                                    }"/>
+                                    <field
+                                            name="product_uom"
+                                            force_save="1"
+                                            string="UoM"
+                                            required="not display_type"
+                                            context="{'company_id': parent.company_id}"
+                                            groups="uom.group_uom"
+                                            options='{"no_open": True}'
+                                            optional="show"/>
+
+                                    <field name="product_packaging_qty" invisible="not product_id"
+                                           groups="product.group_stock_packaging" optional="show"/>
+
+                                    <!--                                    <field name="discount" string="Disc.%" groups="product.group_discount_per_so_line"-->
+                                    <!--                                           optional="show"/>-->
+                                    <!--                                    <field name="price_subtotal"/>-->
+                                    <!--                                    &lt;!&ndash;                                    <field name="price_subtotal" string="Tax excl."/>&ndash;&gt;-->
+                                    <!--                                    <field name="price_total" optional="hide"/>-->
+                                    <!--                                    &lt;!&ndash;                                    <field name="price_total" string="Tax incl." optional="hide"/>&ndash;&gt;-->
+                                    <!--                                    &lt;!&ndash; Others fields &ndash;&gt;-->
+                                    <!--                                    <field name="state" column_invisible="True"/>-->
+                                    <!--                                    <field name="currency_id" column_invisible="True"/>-->
+                                    <!--                                    <field name="company_id" column_invisible="True"/>-->
+                                    <field name="contract_id" readonly='1' column_invisible="not parent.id"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
+                        </page>
+                        <page string="Planning" name="planning">
+                            <field
+                                    name="planning_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    readonly="state == 'cancel' or locked">
+                                <tree
+                                        string="Contact Lines"
+                                        editable="bottom"
+                                        limit="200"
+                                        create="0"
+                                        edit="0"
+                                >
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note"
+                                                context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+
+                                    <field name="name" widget="handle"/>
+                                    <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="product_uom_category_id" column_invisible="True"/>
+                                    <field name="product_type" column_invisible="True"/>
+                                    <field name="product_updatable" column_invisible="True"/>
+                                    <field
+                                            name="product_id"
+                                            readonly="not product_updatable"
+                                            required="not display_type"
+                                            force_save="1"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+
+                                    }"
+                                            options="{
+                                        'no_open': True,
+                                    }"
+
+                                            widget="sol_product_many2one"/>
+                                    <field name="product_template_id"
+                                           string="Product"
+                                           column_invisible="True"
+                                           readonly="not product_updatable"
+                                           required="not display_type"
+                                           context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id,
+                                    }"
+                                           options="{
+                                        'no_open': True,
+                                    }"
+                                           widget="sol_product_many2one"
+                                           placeholder="Type to find a product..."/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name='code'/>
+                                    <field
+                                            name="product_uom_qty"
+                                            decoration-info="(not display_type)" decoration-bf="(not display_type)"
+                                            context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'company_id': parent.company_id
+                                    }"/>
+                                    <field
+                                            name="product_uom"
+                                            force_save="1"
+                                            string="UoM"
+                                            required="not display_type"
+                                            context="{'company_id': parent.company_id}"
+                                            groups="uom.group_uom"
+                                            options='{"no_open": True}'
+                                            optional="show"/>
+
+                                    <field name="product_packaging_qty" invisible="not product_id"
+                                           groups="product.group_stock_packaging" optional="show"/>
+                                    <field name="contract_id" readonly='1' column_invisible="not parent.id"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <div class="clearfix"/>
+                            </group>
+                        </page>
+                        <page name="commission" string="Commission" sequence="90">
+                            <header>
+                                <button type="object" class="btn btn-primary" name="get_commission"
+                                        string="Get Commission"/>
+                            </header>
+                            <form>
+                                <sheet>
+                                    <group col="3">
+                                        <group>
+                                            <field name="tech_eng" readonly="1"/>
+                                            <field name="executive_eng" readonly="1"/>
+                                            <field name="inspections_Manager"/>
+                                            <field name="technical_office_manager"/>
+                                            <field name="external_commission_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="dep_tech_eng_id"/>
+                                            <field name="dep_executive_eng_id"/>
+                                            <field name="dep_inspections_manager"/>
+                                            <field name="dep_technical_office_manager"/>
+                                        </group>
+                                        <group>
+                                            <field name="tech_commission" string="Commission" readonly="1"/>
+                                            <field name="executive_commission" string="Commission" readonly="1"/>
+                                            <field name="executive_manager_commission" string="Commission"
+                                                   readonly="1"/>
+                                            <field name="tech_manager_commission" string="Commission" readonly="1"/>
+                                            <field name="external_commission" string="Commission"/>
+                                        </group>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </page>
+
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    inherit views in the -->
+    <record id="view_contract_line_tree" model="ir.ui.view">
+        <field name="name">contract.contract.tree</field>
+        <field name="model">contract.contract</field>
+        <field name="arch" type="xml">
+            <tree string="confirmed contract Lines">
+                <field name="partner_id" readonly="1"/>
+                <field name="create_date" readonly="1"/>
+                <field name="name" readonly="1"/>
+                <field name="state" string="Statue" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="contract_action_id" model="ir.actions.act_window">
+        <field name="name">contract</field>
+        <field name="res_model">contract.contract</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Contract
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="contract_menu_root"
+              name="Contracts"
+              active="True"
+              sequence="30">
+
+        <menuitem id="contract_contract_menu" name="Contract" action="contract_action_id" sequence="10"/>
+        <menuitem id="departments_menu" name="Departments" sequence="11">
+
+
+        </menuitem>
+    </menuitem>
+
+
+</odoo>

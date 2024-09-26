@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pricing_menu_form" model="ir.ui.view">
+        <field name="name">pricing.menu.wizard.form</field>
+        <field name="model">pricing.menu</field>
+        <field name="arch" type="xml">
+            <form string="Pricing">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_open_pricing_wizard" string="Open" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="pricing_menu_action" model="ir.actions.act_window">
+        <field name="name">Bom Pricing</field>
+        <field name="res_model">pricing.menu</field>
+        <field name="view_id" ref="pricing_menu_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

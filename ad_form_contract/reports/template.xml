@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="form_contract_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <div class="page" style="font-size:18px;">
+                        <div style="width:100%;height:100%">
+                            <div>
+
+                                <h4 style="font-weight:bold;margin-top:4px" class="text-center">نموذج تحديد موعد تركيب
+                                </h4>
+
+                            </div>
+                            <div class="text-left">انه في يوم الموافق:
+                                <span t-esc="o.date"></span>
+                            </div>
+                            <div class="text-right">المبرم فيها بين:
+                                <span t-esc="o.contract_date"/>
+                                المؤرخ<span t-esc="o.contract_id.name"/>بخصوص العقد رقم
+                            </div>
+                            <div>شركه جرين لاين للاستثمار العقاري واعمال المقاولات</div>
+
+
+                            <div>
+                                تم الاتفاق مع الطرف الثاني علي موعد يوم الخميس الموافق
+                                <span t-esc="o.start_date"/>
+                                علي البدء في توريد وتركيب الاعمال المتفق عليها ف التعاقد
+                            </div>
+
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

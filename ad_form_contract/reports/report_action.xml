@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="form_contract_print_pdf" model="ir.actions.report">
+        <field name="name">View contract pdf</field>
+        <field name="model">form.contracts</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ad_form_contract.form_contract_template</field>
+        <field name="report_file">ad_form_contract.form_contract_template</field>
+        <field name="print_report_name">('Form Contract')</field>
+        <field name="binding_model_id" ref="model_form_contracts"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

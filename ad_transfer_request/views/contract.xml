@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="model_contract_view_id" model="ir.ui.view">
+        <field name="name">contract.contract.model.inherit.view</field>
+        <field name="model">contract.contract</field>
+        <field name="inherit_id" ref="green_contracts.view_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header//button[@name='action_cancel']" position="before">
+                <button name="open_transfer_installation_wizard" type="object"
+                        string="Installation Request"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="open_distortion_action"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-list">
+                    <field name="distortion_count" widget="statinfo" string="Distortion"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

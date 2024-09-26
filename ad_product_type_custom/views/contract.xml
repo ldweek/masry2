@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="task_add_in_contract_technical_line_view_id" model="ir.ui.view">
+        <field name="name">contract.contract.technical.model.inherit.view</field>
+        <field name="model">contract.contract</field>
+        <field name="inherit_id" ref="green_contracts.view_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='technical_office']/field[@name='technical_office_ids']/tree/field[@name='distribution']"
+                   position="after">
+                <field name="task_id" domain="[('contract_id', '=', contract_id)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

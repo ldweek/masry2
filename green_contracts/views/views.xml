@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+    <record id="view_order_form_inherit_contract" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.contract</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">
+                <field name="contract_id" readonly="0"/>
+                <field name="analytic_account_id" readonly="0"/>
+            </xpath>
+            <xpath expr="//group[2]" position="inside">
+                <field name="contract_id" readonly="1" invisible="1"/>
+                <field name="analytic_account_id" readonly="1" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_production_form_view_contract" model="ir.ui.view">
+        <field name="name">mrp.production.inherited.form.contract</field>
+        <field name="model">mrp.production</field>
+        <field name="priority">64</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[2]" position="inside">
+                <field name="contract_id" readonly="1"/>
+                <field name="analytic_account_id" readonly="1"/>
+                <field name="ref" readonly="1"/>
+                <field name="user_request_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_invoice_contract" model="ir.ui.view">
+        <field name="name">Inherit project form contract</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="priority">24</field>
+        <field name="arch" type="xml">
+            <xpath expr="//group[2]" position="inside">
+                <field name="contract_id" readonly="1"/>
+                <field name="analytic_account_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_form2_inherit_contract" model="ir.ui.view">
+        <field name="name">view.task.form2.inherit.contract</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[2]" position="inside">
+                <field name="contract_id" readonly="1"/>
+                <field name="analytic_account_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_inherited_form_contract_id" model="ir.ui.view">
+        <field name="name">purchase.order.inherited.form.contract_id</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">
+                <field name="contract_id" readonly="0"/>
+                <field name="analytic_account_id" readonly="0"/>
+                <field name="error_responsible_id" required="parent.is_replacement" column_invisible="not parent.is_replacement"/>
+            </xpath>
+            <xpath expr="//group[2]" position="inside">
+                <field name="contract_id" readonly="1" invisible="1"/>
+                <field name="analytic_account_id" readonly="1" invisible="1"/>
+                <field name="is_replacement" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
+
+
+
+
+
+    <record id="stock_picking_form_view_inherited_contract_id" model="ir.ui.view">
+        <field name="name">stock.picking.inherited.view.form.contract_id</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[2]" position="inside">
+                <field name="contract_id" readonly="1"/>
+                <field name="analytic_account_id" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='product_uom_qty']"
+                   position="before">
+                <field name="contract_id" readonly="0"/>
+                <field name="analytic_account_id" readonly="0"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

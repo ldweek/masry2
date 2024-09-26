@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="purchase_request_root" name="PO Requests" sequence="15"/>
+
+    <menuitem id="purchase_request_menu" name="Requests" parent="purchase_request_root" action="purchase_request_action" sequence="1"/>
+
+</odoo>

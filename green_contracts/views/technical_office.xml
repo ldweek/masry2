@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="technical_office_action" model="ir.actions.act_window">
+        <field name="name">technical.office.action</field>
+        <field name="res_model">technical.office</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="technical_office_from_view" model="ir.ui.view">
+        <field name="name">technical.office.form.view</field>
+        <field name="model">technical.office</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="contract_id"/>
+                            <field name="distribution"/>
+                            <field name="product_id"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="product_uom_qty"/>
+                            <field name="product_uom_category_id" invisible="1"/>
+                            <field name="product_uom"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="technical_office_tree_view" model="ir.ui.view">
+        <field name="name">technical.office.tree.view</field>
+        <field name="model">technical.office</field>
+        <field name="arch" type="xml">
+            <tree default_order="id desc">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="code"/>
+                <field name="product_uom_qty"/>
+                <field name="product_uom"/>
+                <field name="distribution"/>
+                <field name="contract_id"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="technical_office_menu"
+              name="Technical Office Department"
+              action="green_contracts.technical_office_action"
+              parent="green_contracts.departments_menu"
+              sequence="1"/>
+</odoo>

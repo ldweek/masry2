@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="contract_config_installation_day_view_form_contract" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="green_contracts.contract_view_form_contract"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//app[@name='contract_contract']" position="inside">
+                    <div class="app_settings_block" data-string="pdc setting" id="expire" string="Expire day"
+                         data-key="expire_day">
+                        <h2>Contract</h2>
+                        <div class="row mt16 o_settings_container" id="end_contract_setting">
+                            <div class="col-xs-6 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Day To Finish Installation</span>
+                                    <div class="text-muted content-group mt16">
+                                        <field name="day_installation" class="text-center oe_inline"
+                                               help="Enter the number of days by which the installation must be completed"/>
+                                        <span>days</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
